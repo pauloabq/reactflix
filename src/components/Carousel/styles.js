@@ -41,14 +41,14 @@ export const VideoCardList = styled.ul`
   display: flex;
   overflow-x: auto;
   flex-direction: row;
-  
+
   li {
     margin-right: 16px;
   }
 `;
 
 export const VideoCardGroupContainer = styled.section`
-  color: white;
+  color: var(--white);
   min-height: 197px;
   margin-left: 5%;
   margin-bottom: 16px;

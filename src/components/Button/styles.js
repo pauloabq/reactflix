@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-export const Container = styled.a`
+export const Container = styled.button`
 
   color: var(--white);
   border: 1px solid var(--white);
@@ -21,15 +21,15 @@ export const Container = styled.a`
     opacity: .5;
     }
 
-@media (max-width: 800px) {
-    position: fixed;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: var(--primary);
-    border-radius: 0;
-    border: 0;
-    text-align: center;
-}
+    @media (max-width: 800px) {
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: var(--primary);
+        border-radius: 0;
+        border: 0;
+        text-align: center;
+    }
 
 `;

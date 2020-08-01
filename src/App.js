@@ -1,13 +1,14 @@
 import React from 'react';
-import AppWrapper from './components/AppWrapper';
 import GlobalStyle from './styles/global';
+import Routes from './routes';
 
+import {BrowserRouter} from 'react-router-dom'
 function App() {
   return (
-    <>
-    <AppWrapper />
-    <GlobalStyle />
-   </>
+    <BrowserRouter>
+        <Routes />
+        <GlobalStyle />
+    </BrowserRouter>
   );
 }
 

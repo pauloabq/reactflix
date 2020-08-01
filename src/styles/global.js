@@ -24,8 +24,23 @@ export default createGlobalStyle`
     padding: 0;
     background: var(--grayDark)
   }
-
+  body {
+    --bodyPaddingTop: 94px;
+    padding-top: var(--bodyPaddingTop);
+  }
+  @media (max-width: 800px) {
+    body {
+      --bodyPaddingTop: 40px;
+      padding-top: var(--bodyPaddingTop);
+    }
+  }
   a {
     color: inherit;
+  }
+
+  #root {
+    min-height: calc(100vh - var(--bodyPaddingTop));
+    display: flex;
+    flex-direction: column;
   }
 `;

@@ -25,7 +25,7 @@ function VideoCardGroup({
           }
         </>
       )}
-      <Slider>
+      <Slider categoryColor={categoryColor}>
         {videos.map((video, index) => {
           if (ignoreFirstVideo && index === 0) {
             return null;

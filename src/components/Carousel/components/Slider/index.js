@@ -12,10 +12,10 @@ export const SliderItem = ({ children, ...props }) =>{
   );
 }
 
-export const Slider = ({ children }) => (
-  <Container>
+export const Slider = ({ categoryColor, children }) => (
+  <Container slickColor={categoryColor}>
     <SlickSlider {...{
-      dots: false,
+      dots: true,
       infinite: false,
       speed: 300,
       centerMode: false,

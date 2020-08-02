@@ -22,6 +22,13 @@ export const Container = styled.ul`
   }
   .slick-next {
     right: 16px;
+    color: ${props => props.slickColor}
+  }
+  .slick-next::before, .slick-prev::before {
+    color: ${props => props.slickColor}
+  }
+  .slick-dots li button:before {
+    color: ${props => props.slickColor};
   }
 `;
 

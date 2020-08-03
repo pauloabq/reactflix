@@ -4,20 +4,16 @@ import { Switch, Route} from 'react-router-dom'
 import Home from '../pages/Home';
 import CadastroVideo from '../pages/Cadastro/Video'
 import CadastroCategoria from '../pages/Cadastro/Categoria'
+import Page404 from '../pages/Error'
 
 
-const Page404 = () =>{
-  return(
-    <div>404 - Not Found</div>
-  );
-}
 
 function Routes() {
   return (
       <Switch>
         <Route path="/" exact component={Home} />
-        <Route path="/cadastro/video/categoria" component={CadastroCategoria} />
-        <Route path="/cadastro/video" component={CadastroVideo} />
+        <Route path="/cadastro/video/categoria" exact component={CadastroCategoria} />
+        <Route path="/cadastro/video" exact component={CadastroVideo} />
         <Route component={Page404} />
       </Switch>
   );

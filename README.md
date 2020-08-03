@@ -23,8 +23,11 @@
 
 Projeto de desenvolvimento de plataforma agregadora de conteúdo em vídeo (formato NetFlix), realizado durante a semana de imersão react Alura.
 
-## Em andamento...
+## Live preview
+Acesse aqui: https://reactflix.pauloabq.vercel.app/
 
+## Em andamento...
+Projeto em andamento.
 
 
 ### :memo: Licença

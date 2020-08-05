@@ -4,15 +4,16 @@ import VideoCard from './components/VideoCard';
 import { Slider, SliderItem } from './components/Slider';
 
 interface VideoCardGroupProps {
-  ignoreFirstVideo: boolean;
+  ignoreFirstVideo?: boolean;
   category: {
     titulo: string;
     cor: string;
-    link_extra: {
+    link?: string;
+    link_extra?: {
       text: string;
       url: string;
     };
-    videos: [{ titulo: string; url: string }];
+    videos: { titulo: string; url: string }[];
   };
 }
 const VideoCardGroup: React.FC<VideoCardGroupProps> = ({

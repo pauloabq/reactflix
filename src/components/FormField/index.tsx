@@ -1,5 +1,11 @@
 import React, { ChangeEvent } from 'react';
-import { Container } from './styles';
+import {
+  FormFieldContainer,
+  Label,
+  LabelText,
+  Textarea,
+  Input,
+} from './styles';
 
 interface FormFieldProps {
   label: string;
@@ -18,18 +24,18 @@ const FormField: React.FC<FormFieldProps> = ({
   ...props
 }) => {
   const tagId = `id_${name}`;
+  const isTextArea = type === 'textarea';
   return (
-    <Container>
-      <label htmlFor={tagId}>
-        {label}
-
-        {type === 'textarea' ? (
-          <textarea id={tagId} name={name} {...props} />
+    <FormFieldContainer>
+      <Label htmlFor={tagId}>
+        {isTextArea ? (
+          <Textarea id={tagId} type={type} name={name} {...props} />
         ) : (
-          <input id={tagId} type={type} name={name} {...props} />
+          <Input id={tagId} type={type} name={name} {...props} />
         )}
-      </label>
-    </Container>
+        <LabelText>{label}</LabelText>
+      </Label>
+    </FormFieldContainer>
   );
 };
 

@@ -29,7 +29,7 @@ const FormField: React.FC<FormFieldProps> = ({
     <FormFieldContainer>
       <Label htmlFor={tagId}>
         {isTextArea ? (
-          <Textarea id={tagId} type={type} name={name} {...props} />
+          <Textarea id={tagId} name={name} {...props} />
         ) : (
           <Input id={tagId} type={type} name={name} {...props} />
         )}

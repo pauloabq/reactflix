@@ -76,4 +76,4 @@ export const Input = styled.input<FieldProps>`
   }
 `;
 
-export const Textarea = styled(Input)``;
+export const Textarea = Input.withComponent('textarea');

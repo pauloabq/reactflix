@@ -22,6 +22,9 @@ const FormWrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  textarea {
+    min-height: 150px;
+  }
   form {
     text-align: center;
   }

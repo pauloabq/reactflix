@@ -1,10 +1,17 @@
-import React, { useState, ChangeEvent, FormEvent } from 'react';
+import React, { useState, useEffect, ChangeEvent, FormEvent } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import PageDefault from '../../../components/PageDefault';
 import FormField from '../../../components/FormField';
 
 interface FormInterface {
+  nome: string;
+  descricao: string;
+  cor: string;
+}
+
+interface CategoryInterface {
+  id?: number;
   nome: string;
   descricao: string;
   cor: string;
@@ -27,9 +34,23 @@ const CadastroCategoria: React.FC = () => {
     cor: '',
   };
 
-  const [categorias, setCategoria] = useState<Array<string>>([]);
+  const [categorias, setCategoria] = useState<Array<CategoryInterface>>([]);
 
   const [formValues, setFormValues] = useState<FormInterface>(initialValues);
+  const isProduction = process.env.NODE_ENV === 'production';
+
+  const BASE_URL = isProduction
+    ? 'https://reactflix-backend.herokuapp.com/categorias'
+    : 'http://localhost:3001/categorias';
+
+  useEffect(() => {
+    const getData = async () => {
+      const response = await fetch(BASE_URL);
+      const responseData = await response.json();
+      setCategoria([...responseData]);
+    };
+    getData();
+  }, [BASE_URL]);
 
   const handleChange = (
     e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>,
@@ -43,7 +64,7 @@ const CadastroCategoria: React.FC = () => {
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setCategoria([...categorias, formValues.nome]);
+    setCategoria([...categorias, formValues]);
     setFormValues(initialValues);
   };
 
@@ -74,12 +95,16 @@ const CadastroCategoria: React.FC = () => {
             onChange={handleChange}
           />
           <button type="submit">Cadastrar</button>
-          <ul>
-            {categorias.map(value => (
-              <li key={value}>{value}</li>
-            ))}
-          </ul>
         </form>
+
+        {categorias.length === 0 && <div>Loading...</div>}
+
+        <ul>
+          {categorias.map(value => (
+            <li key={value.nome}>{value.nome}</li>
+          ))}
+        </ul>
+
         <Link to="/">Voltar à Home</Link>
       </FormWrapper>
     </PageDefault>

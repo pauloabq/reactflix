@@ -1,34 +1,15 @@
-import React, { useState, useEffect, ChangeEvent, FormEvent } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import styled from 'styled-components';
+import { FormWrapper } from './styles';
 import PageDefault from '../../../components/PageDefault';
 import FormField from '../../../components/FormField';
-
-interface FormInterface {
-  nome: string;
-  descricao: string;
-  cor: string;
-}
+import useForm from '../../../hooks/useForm';
 
 interface CategoryInterface {
   id?: number;
-  nome: string;
-  descricao: string;
+  titulo: string;
   cor: string;
 }
-
-const FormWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  textarea {
-    min-height: 150px;
-  }
-  form {
-    text-align: center;
-  }
-`;
 
 const CadastroCategoria: React.FC = () => {
   const initialValues = {
@@ -39,7 +20,14 @@ const CadastroCategoria: React.FC = () => {
 
   const [categorias, setCategoria] = useState<Array<CategoryInterface>>([]);
 
-  const [formValues, setFormValues] = useState<FormInterface>(initialValues);
+  const { formValues, handleChange, handleSubmit } = useForm({
+    initialValues,
+    onSubmit: () => {
+      const { nome: titulo, cor } = formValues;
+      setCategoria([...categorias, { titulo, cor }]);
+    },
+  });
+
   const isProduction = process.env.NODE_ENV === 'production';
 
   const BASE_URL = isProduction
@@ -50,26 +38,13 @@ const CadastroCategoria: React.FC = () => {
     const getData = async () => {
       const response = await fetch(BASE_URL);
       const responseData = await response.json();
-      setCategoria([...responseData]);
+      const returnData = responseData.map(
+        ({ titulo, cor }: CategoryInterface) => ({ titulo, cor }),
+      );
+      setCategoria(returnData);
     };
     getData();
   }, [BASE_URL]);
-
-  const handleChange = (
-    e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>,
-  ) => {
-    const { name, value } = e.target;
-    setFormValues({
-      ...formValues,
-      [name]: value,
-    });
-  };
-
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setCategoria([...categorias, formValues]);
-    setFormValues(initialValues);
-  };
 
   return (
     <PageDefault>
@@ -104,7 +79,7 @@ const CadastroCategoria: React.FC = () => {
 
         <ul>
           {categorias.map(value => (
-            <li key={value.nome}>{value.nome}</li>
+            <li key={value.titulo}>{value.titulo}</li>
           ))}
         </ul>
 

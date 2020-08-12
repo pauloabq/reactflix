@@ -8,6 +8,7 @@ import Page404 from '../pages/Error';
 const Routes: React.FC = () => {
   return (
     <Switch>
+      ScrollToTop
       <Route path="/" exact component={Home} />
       <Route
         path="/cadastro/video/categoria"

@@ -1,15 +1,15 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { FormWrapper } from './styles';
+import React, { useState, useEffect, FormEvent } from 'react';
+import { Link, useHistory } from 'react-router-dom';
 import PageDefault from '../../../components/PageDefault';
-import FormField from '../../../components/FormField';
+import FormField, { FormWrapper } from '../../../components/FormField';
+import Message from '../../../components/Message';
 import useForm from '../../../hooks/useForm';
-
-interface CategoryInterface {
-  id?: number;
-  titulo: string;
-  cor: string;
-}
+import useMessage from '../../../hooks/useMessage';
+import {
+  getCategories,
+  create,
+} from '../../../repositories/CategoriesRepository';
+import { CategoriasInterface } from '../../../types/video';
 
 const CadastroCategoria: React.FC = () => {
   const initialValues = {
@@ -18,36 +18,84 @@ const CadastroCategoria: React.FC = () => {
     cor: '',
   };
 
-  const [categorias, setCategoria] = useState<Array<CategoryInterface>>([]);
+  const { addMessage, removeMessage, messageObj } = useMessage();
 
-  const { formValues, handleChange, handleSubmit } = useForm({
+  const [categorias, setCategoria] = useState<
+    Array<Omit<CategoriasInterface, 'id'>>
+  >([]);
+
+  const { formValues, handleChange } = useForm({
     initialValues,
-    onSubmit: () => {
-      const { nome: titulo, cor } = formValues;
-      setCategoria([...categorias, { titulo, cor }]);
-    },
   });
 
-  const isProduction = process.env.NODE_ENV === 'production';
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
 
-  const BASE_URL = isProduction
-    ? 'https://reactflix-backend.herokuapp.com/categorias'
-    : 'http://localhost:3001/categorias';
+    const { nome: titulo, descricao, cor } = formValues;
+    const newMessages = [];
+    if (titulo.length < 5) {
+      newMessages.push('Informe o nome da categoria');
+    }
+    if (titulo.length < 5) {
+      newMessages.push('Informe a descrição');
+    }
+    if (newMessages.length > 0) {
+      addMessage({ type: 'error', message: newMessages });
+      return false;
+    }
+
+    const postCategory = async () => {
+      const dataPost: Omit<CategoriasInterface, 'id'> = {
+        titulo,
+        descricao,
+        cor,
+      };
+      try {
+        const retorno = await create(dataPost);
+        if (!retorno) {
+          addMessage({ type: 'error', message: ['Erro ao cadastrar!'] });
+          return retorno;
+        }
+      } catch (error) {
+        addMessage({ type: 'error', message: [`Erro: ${error.message}`] });
+        return false;
+      }
+      return true;
+    };
+    const result = postCategory();
+    removeMessage();
+    if (result) {
+      addMessage({ type: 'success', message: ['Cadastro efetuado'] });
+      setCategoria([...categorias, { titulo, descricao, cor }]);
+    } else {
+      addMessage({ type: 'errr', message: ['Ocorreu um erro ao cadastrar'] });
+    }
+    return result;
+  };
 
   useEffect(() => {
     const getData = async () => {
-      const response = await fetch(BASE_URL);
-      const responseData = await response.json();
-      const returnData = responseData.map(
-        ({ titulo, cor }: CategoryInterface) => ({ titulo, cor }),
-      );
-      setCategoria(returnData);
+      const response = await getCategories();
+      setCategoria(response);
     };
     getData();
-  }, [BASE_URL]);
+  }, []);
+
+  const hasMessage = messageObj.message.length > 0;
+  const history = useHistory();
+  const handleClickSuccess = () => {
+    history.push('/cadastro/video');
+  };
 
   return (
     <PageDefault>
+      {hasMessage && (
+        <Message
+          messageObj={messageObj}
+          handleClickSuccess={handleClickSuccess}
+          handleClickError={removeMessage}
+        />
+      )}
       <FormWrapper>
         <h1>Cadastro de Categorias</h1>
         <form onSubmit={handleSubmit} action="">

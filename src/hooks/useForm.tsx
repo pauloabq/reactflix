@@ -1,51 +1,33 @@
-import { useState, ChangeEvent, FormEvent } from 'react';
-
-interface FormInterface {
-  nome: string;
-  descricao: string;
-  cor: string;
-}
+import { useState, ChangeEvent } from 'react';
 
 interface UseFormInterface {
-  formValues: FormInterface;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  formValues: { [key: string]: any };
   handleChange: (
-    e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>,
+    event: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>,
   ) => void;
-  handleSubmit: (e: FormEvent<HTMLFormElement>) => void;
 }
 
 interface UseFormParams {
-  initialValues: FormInterface;
-  onSubmit(): void;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  initialValues: { [key: string]: any };
 }
-const useForm = ({
-  initialValues,
-  onSubmit,
-}: UseFormParams): UseFormInterface => {
-  const [formValues, setFormValues] = useState<FormInterface>(initialValues);
+const useForm = ({ initialValues }: UseFormParams): UseFormInterface => {
+  const [formValues, setFormValues] = useState(initialValues);
 
   const handleChange = (
-    e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>,
+    event: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>,
   ) => {
-    const { name, value } = e.target;
+    const { name, value } = event.target;
     setFormValues({
       ...formValues,
       [name]: value,
     });
   };
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    onSubmit();
-    // const { nome: titulo, cor } = formValues;
-    // setCategoria([...categorias, { titulo, cor }]);
-    setFormValues(initialValues);
-  };
-
   return {
     formValues,
     handleChange,
-    handleSubmit,
   };
 };
 

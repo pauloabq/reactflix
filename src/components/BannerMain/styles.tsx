@@ -59,6 +59,7 @@ export const Item = styled.div`
   margin-bottom: 50px;
   @media (max-width: 800px) {
     width: 100%;
+    text-align: center;
   }
 `;
 
@@ -103,7 +104,8 @@ export const Title = styled.h2`
   }
 `;
 
-export const WatchButton = styled.button`
+export const WatchButton = styled.a`
+  width: 200px;
   font-family: 'Roboto', sans-serif;
   box-sizing: border-box;
   cursor: pointer;

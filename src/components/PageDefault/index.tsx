@@ -3,11 +3,14 @@ import Menu from '../Menu';
 import Footer from '../Footer';
 import { Container } from './styles';
 
-const PageDefault: React.FC = ({ children }) => {
+interface PagedefaultProps {
+  paddingAll?: number;
+}
+const PageDefault: React.FC<PagedefaultProps> = ({ paddingAll, children }) => {
   return (
     <>
       <Menu />
-      <Container>{children}</Container>
+      <Container paddingAll={paddingAll}>{children}</Container>
       <Footer />
     </>
   );

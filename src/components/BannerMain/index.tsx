@@ -40,7 +40,9 @@ const BannerMain: React.FC<BannerInterface> = ({
 
         <Item>
           <VideoIframeResponsive youtubeID={youTubeID} />
-          <WatchButton>Assistir</WatchButton>
+          <WatchButton href={url} target="_blank">
+            Assistir
+          </WatchButton>
         </Item>
       </ContentAreaContainer>
     </BannerMainContainer>

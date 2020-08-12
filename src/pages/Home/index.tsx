@@ -1,32 +1,55 @@
-import React from 'react';
-import dadosIniciais from '../../data/dados_iniciais.json';
+import React, { useEffect, useState } from 'react';
 import BannerMain from '../../components/BannerMain';
 import Carousel from '../../components/Carousel';
-import Menu from '../../components/Menu';
-import Footer from '../../components/Footer';
+import PageDefault from '../../components/PageDefault';
+import { getCategoriesFull } from '../../repositories/CategoriesRepository';
+
+interface DadosVideosInterface {
+  cor: string;
+  id: number;
+  link_extra: {
+    text: string;
+    url: string;
+  };
+  titulo: string;
+  videos: {
+    categoriaId: number;
+    description: string;
+    id: number;
+    titulo: string;
+    url: string;
+  }[];
+}
 
 const Home: React.FC = () => {
+  const [dadosVideos, setDadosVideos] = useState<DadosVideosInterface[]>([]);
+  useEffect(() => {
+    const getData = async () => {
+      const data = await getCategoriesFull();
+      setDadosVideos(data);
+    };
+    getData();
+  }, []);
   return (
     <>
-      <Menu />
-      <BannerMain
-        videoTitle={dadosIniciais.categorias[0].videos[0].titulo}
-        url={dadosIniciais.categorias[0].videos[0].url}
-        videoDescription="O que é Front-end? Trabalhando na área os termos HTML, CSS e JavaScript fazem parte da rotina das desenvolvedoras e desenvolvedores. Mas o que eles fazem, afinal? Descubra com a Vanessa!"
-      />
+      <PageDefault paddingAll={0}>
+        {dadosVideos.length === 0 && <div>Loading...</div>}
 
-      <Carousel ignoreFirstVideo category={dadosIniciais.categorias[0]} />
-
-      <Carousel category={dadosIniciais.categorias[1]} />
-
-      <Carousel category={dadosIniciais.categorias[2]} />
-
-      <Carousel category={dadosIniciais.categorias[3]} />
-
-      <Carousel category={dadosIniciais.categorias[4]} />
-
-      <Carousel category={dadosIniciais.categorias[5]} />
-      <Footer />
+        {dadosVideos.length > 0 && (
+          <>
+            <BannerMain
+              videoTitle={dadosVideos[0].videos[0].titulo}
+              url={dadosVideos[0].videos[0].url}
+              videoDescription={dadosVideos[0].videos[0].description}
+            />
+            {dadosVideos.map((video, index) => {
+              return (
+                <Carousel ignoreFirstVideo={index === 0} category={video} />
+              );
+            })}
+          </>
+        )}
+      </PageDefault>
     </>
   );
 };

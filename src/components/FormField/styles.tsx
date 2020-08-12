@@ -77,3 +77,16 @@ export const Input = styled.input<FieldProps>`
 `;
 
 export const Textarea = Input.withComponent('textarea');
+
+export const FormContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  textarea {
+    min-height: 150px;
+  }
+  form {
+    text-align: center;
+  }
+`;

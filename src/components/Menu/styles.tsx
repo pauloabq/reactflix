@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const MenuWrapper = styled.nav`
   width: 100%;
-  height: 94px;
+  height: var(--bodyPaddingTop);
   background: var(--black);
   display: flex;
   justify-content: space-between;
@@ -24,7 +24,7 @@ export const MenuWrapper = styled.nav`
     }
   }
   @media (max-width: 800px) {
-    height: 40px;
+    height: var(--bodyPaddingTop);
     justify-content: center;
     a {
       img {

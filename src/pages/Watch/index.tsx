@@ -15,7 +15,7 @@ const Watch: React.FC = () => {
           <WatchComponent
             title="Iframe title"
             id="ytplayer"
-            src={`http://www.youtube.com/embed/${params.videoid}?autoplay=1`}
+            src={`https://www.youtube.com/embed/${params.videoid}?autoplay=1`}
             frameBorder="0"
             allowFullScreen
           />

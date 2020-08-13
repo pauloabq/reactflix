@@ -8,7 +8,7 @@ export const MessageContainer = styled.div<MessageProps>`
   border: 1px solid tomato;
   border-radius: 4px;
   text-align: center;
-  min-width: 300px;
+  width: 300px;
   right: 0;
   position: fixed;
   z-index: 10;
@@ -18,7 +18,9 @@ export const MessageContainer = styled.div<MessageProps>`
   color: #721c24;
   border-color: #f5c6cb;
   padding: 0.75rem 1.25rem;
-  /* display: none; */
+  p {
+    padding-right: 30px;
+  }
   button {
     position: absolute;
     border: none;

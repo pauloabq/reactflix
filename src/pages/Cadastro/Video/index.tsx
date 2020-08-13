@@ -1,4 +1,5 @@
 import React, { useState, useEffect, FormEvent } from 'react';
+
 import { Link, useHistory } from 'react-router-dom';
 import PageDefault from '../../../components/PageDefault';
 import FormField, { FormWrapper } from '../../../components/FormField';
@@ -9,11 +10,6 @@ import { createVideo } from '../../../repositories/VideosRepository';
 import { VideosInterface, CategoriasInterface } from '../../../types/video';
 import Message from '../../../components/Message';
 
-// interface MessageInterface {
-//   type: string;
-//   message: string[];
-// }
-
 const CadastroVideo: React.FC = () => {
   const initialValues = {
     categoria: '',
@@ -23,11 +19,11 @@ const CadastroVideo: React.FC = () => {
   };
 
   const [categorias, setCategorias] = useState<Array<CategoriasInterface>>([]);
+
+  const [buttonDisable, setDisableButton] = useState(false);
+
   const listaCategorias = categorias.map(cat => cat.titulo);
-  // const [messageObj, setMessage] = useState<MessageInterface>({
-  //   type: '',
-  //   message: [],
-  // });
+
   const history = useHistory();
 
   const { formValues, handleChange } = useForm({
@@ -35,12 +31,7 @@ const CadastroVideo: React.FC = () => {
   });
 
   const { addMessage, removeMessage, messageObj } = useMessage();
-  // const removeMessage = () => {
-  //   setMessage({
-  //     type: '',
-  //     message: [],
-  //   });
-  // };
+
   useEffect(() => {
     const getData = async () => {
       const response = await getCategories();
@@ -49,9 +40,9 @@ const CadastroVideo: React.FC = () => {
     getData();
   }, []);
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-
+    setDisableButton(true);
     const newMessages = [];
 
     const { categoria, description, titulo, url } = formValues;
@@ -72,44 +63,35 @@ const CadastroVideo: React.FC = () => {
     }
     if (newMessages.length > 0) {
       addMessage({ type: 'error', message: newMessages });
-      return false;
+      setDisableButton(false);
+      return;
     }
 
-    const sendData = async () => {
-      if (categoriaProcurada) {
-        const dataPost: VideosInterface = {
-          categoriaId: categoriaProcurada.id,
-          description,
-          titulo,
-          url,
-        };
-        try {
-          const retorno = await createVideo(dataPost);
-          if (!retorno) {
-            addMessage({
-              type: 'error',
-              message: ['Erro ao cadastrar.'],
-            });
-            return retorno;
-          }
-        } catch (error) {
+    if (categoriaProcurada) {
+      const dataPost: VideosInterface = {
+        categoriaId: categoriaProcurada.id,
+        description,
+        titulo,
+        url,
+      };
+      try {
+        const retorno = await createVideo(dataPost);
+        if (!retorno) {
           addMessage({
             type: 'error',
-            message: [`Erro: ${error.message}`],
+            message: ['Erro ao cadastrar.'],
           });
-          return false;
+        } else {
+          addMessage({ type: 'success', message: ['Cadastro efetuado'] });
         }
+      } catch (error) {
+        addMessage({
+          type: 'error',
+          message: ['Ocorreu um erro no envio das informações'],
+        });
       }
-      return true;
-    };
-    removeMessage();
-    const result = sendData();
-    if (result) {
-      addMessage({ type: 'success', message: ['Cadastro efetuado'] });
-    } else {
-      addMessage({ type: 'error', message: ['Ocorreu um erro ao cadastrar'] });
+      setDisableButton(false);
     }
-    return result;
   };
   const hasMessage = messageObj.message.length > 0;
 
@@ -157,7 +139,9 @@ const CadastroVideo: React.FC = () => {
             onChange={handleChange}
             suggestions={listaCategorias}
           />
-          <button type="submit">Cadastrar</button>
+          <button disabled={buttonDisable} type="submit">
+            Cadastrar
+          </button>
         </form>
       </FormWrapper>
 

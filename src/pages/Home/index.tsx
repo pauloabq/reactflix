@@ -3,6 +3,8 @@ import BannerMain from '../../components/BannerMain';
 import Carousel from '../../components/Carousel';
 import PageDefault from '../../components/PageDefault';
 import { getCategoriesFull } from '../../repositories/CategoriesRepository';
+import Message from '../../components/Message';
+import useMessage from '../../hooks/useMessage';
 
 interface DadosVideosInterface {
   cor: string;
@@ -23,16 +25,32 @@ interface DadosVideosInterface {
 
 const Home: React.FC = () => {
   const [dadosVideos, setDadosVideos] = useState<DadosVideosInterface[]>([]);
+
+  const { addMessage, removeMessage, messageObj } = useMessage();
+
   useEffect(() => {
     const getData = async () => {
-      const data = await getCategoriesFull();
-      setDadosVideos(data);
+      try {
+        const data = await getCategoriesFull();
+        setDadosVideos(data);
+      } catch (error) {
+        addMessage({
+          type: 'error',
+          message: ['Ocorreu um erro ao retornar os vídeos'],
+        });
+      }
     };
     getData();
-  }, []);
+  }, [addMessage]);
+
+  const hasMessage = messageObj.message.length > 0;
+
   return (
     <>
       <PageDefault paddingAll={0}>
+        {hasMessage && (
+          <Message messageObj={messageObj} handleClickError={removeMessage} />
+        )}
         {dadosVideos.length === 0 && <div>Loading...</div>}
 
         {dadosVideos.length > 0 && (
@@ -44,7 +62,11 @@ const Home: React.FC = () => {
             />
             {dadosVideos.map((video, index) => {
               return (
-                <Carousel ignoreFirstVideo={index === 0} category={video} />
+                <Carousel
+                  key={video.id}
+                  ignoreFirstVideo={index === 0}
+                  category={video}
+                />
               );
             })}
           </>

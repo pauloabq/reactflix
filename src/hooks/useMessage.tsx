@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 
 interface MessageInterface {
   type: string;
@@ -18,9 +18,9 @@ const useMessage = (): UseMessageInterface => {
   };
   const [messageObj, setMessage] = useState<MessageInterface>(initialValues);
 
-  const addMessage = (msg: MessageInterface): void => {
+  const addMessage = useCallback((msg: MessageInterface): void => {
     setMessage(msg);
-  };
+  }, []);
 
   const removeMessage = (): void => {
     setMessage(initialValues);

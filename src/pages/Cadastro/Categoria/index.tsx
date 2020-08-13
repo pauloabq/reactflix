@@ -24,11 +24,15 @@ const CadastroCategoria: React.FC = () => {
     Array<Omit<CategoriasInterface, 'id'>>
   >([]);
 
+  const [buttonDisable, setDisableButton] = useState(false);
+
   const { formValues, handleChange } = useForm({
     initialValues,
   });
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (
+    event: FormEvent<HTMLFormElement>,
+  ): Promise<void> => {
     event.preventDefault();
 
     const { nome: titulo, descricao, cor } = formValues;
@@ -41,36 +45,30 @@ const CadastroCategoria: React.FC = () => {
     }
     if (newMessages.length > 0) {
       addMessage({ type: 'error', message: newMessages });
-      return false;
+      setDisableButton(false);
+      return;
     }
 
-    const postCategory = async () => {
-      const dataPost: Omit<CategoriasInterface, 'id'> = {
-        titulo,
-        descricao,
-        cor,
-      };
-      try {
-        const retorno = await create(dataPost);
-        if (!retorno) {
-          addMessage({ type: 'error', message: ['Erro ao cadastrar!'] });
-          return retorno;
-        }
-      } catch (error) {
-        addMessage({ type: 'error', message: [`Erro: ${error.message}`] });
-        return false;
-      }
-      return true;
+    const dataPost: Omit<CategoriasInterface, 'id'> = {
+      titulo,
+      descricao,
+      cor,
     };
-    const result = postCategory();
-    removeMessage();
-    if (result) {
-      addMessage({ type: 'success', message: ['Cadastro efetuado'] });
-      setCategoria([...categorias, { titulo, descricao, cor }]);
-    } else {
-      addMessage({ type: 'errr', message: ['Ocorreu um erro ao cadastrar'] });
+    try {
+      const retorno = await create(dataPost);
+      if (!retorno) {
+        addMessage({ type: 'error', message: ['Erro ao cadastrar!'] });
+      } else {
+        addMessage({ type: 'success', message: ['Cadastro efetuado'] });
+        // setCategoria([...categorias, { titulo, descricao, cor }]);
+      }
+    } catch (error) {
+      addMessage({
+        type: 'error',
+        message: ['Ocorreu um erro no envio das informações'],
+      });
     }
-    return result;
+    setDisableButton(false);
   };
 
   useEffect(() => {
@@ -120,7 +118,9 @@ const CadastroCategoria: React.FC = () => {
             value={formValues.cor || '#000000'}
             onChange={handleChange}
           />
-          <button type="submit">Cadastrar</button>
+          <button disabled={buttonDisable} type="submit">
+            Cadastrar
+          </button>
         </form>
 
         {categorias.length === 0 && <div>Loading...</div>}

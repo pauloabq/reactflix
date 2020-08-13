@@ -7,7 +7,7 @@ interface MessageInterface {
     message: string[];
   };
   handleClickError(): void;
-  handleClickSuccess(): void;
+  handleClickSuccess?: () => void;
 }
 const Message: React.FC<MessageInterface> = ({
   messageObj,

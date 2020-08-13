@@ -1,9 +1,10 @@
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 interface VideoCardContainerProps {
   url: string;
 }
-export const VideoCardContainer = styled.a<VideoCardContainerProps>`
+export const VideoCardContainer = styled(Link)<VideoCardContainerProps>`
   border: 2px solid;
   border-radius: 4px;
   text-decoration: none;

@@ -3,8 +3,8 @@ import React from 'react';
 import SlickSlider from 'react-slick';
 import { Container, SliderItem as Item } from './styles';
 
-export const SliderItem: React.FC = ({ children, ...props }) => {
-  return <Item {...props}>{children}</Item>;
+export const SliderItem: React.FC = ({ children, ...rest }) => {
+  return <Item {...rest}>{children}</Item>;
 };
 
 interface SliderProp {

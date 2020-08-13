@@ -25,8 +25,7 @@ const VideoCard: React.FC<VideoCardProps> = ({
   return (
     <VideoCardContainer
       url={image}
-      href={videoURL}
-      target="_blank"
+      to={`/watch/${getYouTubeId(videoURL)}`}
       style={{ borderColor: categoryColor || 'red' }}
       title={videoTitle}
     />

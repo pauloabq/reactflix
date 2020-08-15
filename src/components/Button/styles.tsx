@@ -1,6 +1,15 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
+import { ButtonHTMLAttributes } from 'react';
 
-export const Container = styled.div`
+type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement>;
+type ExtendedButtonProps = ButtonProps & {
+  responsive?: boolean;
+};
+
+export const Container = styled.button<ExtendedButtonProps>`
+  background-color: Transparent;
+  min-width: 135px;
+  max-width: 100%;
   color: var(--white);
   border: 1px solid var(--white);
   box-sizing: border-box;
@@ -16,18 +25,25 @@ export const Container = styled.div`
   transition: opacity 0.3s;
 
   &:hover,
-  &:focus {
+  &:focus,
+  &:disabled {
     opacity: 0.5;
   }
-
-  @media (max-width: 800px) {
-    position: fixed;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: var(--primary);
-    border-radius: 0;
-    border: 0;
-    text-align: center;
-  }
+  ${({ responsive }) => {
+    return (
+      responsive &&
+      css`
+      @media (max-width: 800px) {
+        min-width: 100%;
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: var(--primary);
+        border-radius: 0;
+        border: 0;
+        text-align: center;
+      `
+    );
+  }}
 `;

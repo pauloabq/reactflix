@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 interface BannerMainInterface {
   backgroundImage: string;
@@ -104,7 +105,7 @@ export const Title = styled.h2`
   }
 `;
 
-export const WatchButton = styled.a`
+export const WatchButton = styled(Link)`
   width: 200px;
   font-family: 'Roboto', sans-serif;
   box-sizing: border-box;

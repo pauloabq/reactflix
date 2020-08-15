@@ -14,7 +14,11 @@ export const FormFieldContainer = styled.div`
   }
 `;
 
-export const Label = styled.label``;
+export const Label = styled.label`
+  display: flex;
+  align-items: center;
+  margin-bottom: 45px;
+`;
 
 export const LabelText = styled.span`
   color: #e5e5e5;
@@ -48,7 +52,7 @@ export const Input = styled.input<FieldProps>`
   border-bottom: 4px solid #53585d;
 
   padding: 16px 16px;
-  margin-bottom: 45px;
+  /* margin-bottom: 45px; */
 
   resize: none;
   border-radius: 4px;

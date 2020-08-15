@@ -1,8 +1,9 @@
 import React, { useState, useEffect, FormEvent } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import PageDefault from '../../../components/PageDefault';
 import FormField, { FormWrapper } from '../../../components/FormField';
 import Message from '../../../components/Message';
+import Button from '../../../components/Button';
 import useForm from '../../../hooks/useForm';
 import useMessage from '../../../hooks/useMessage';
 import {
@@ -10,6 +11,7 @@ import {
   create,
 } from '../../../repositories/CategoriesRepository';
 import { CategoriasInterface } from '../../../types/video';
+import { Categorias } from './styles';
 
 const CadastroCategoria: React.FC = () => {
   const initialValues = {
@@ -34,6 +36,7 @@ const CadastroCategoria: React.FC = () => {
     event: FormEvent<HTMLFormElement>,
   ): Promise<void> => {
     event.preventDefault();
+    setDisableButton(true);
 
     const { nome: titulo, descricao, cor } = formValues;
     const newMessages = [];
@@ -42,6 +45,9 @@ const CadastroCategoria: React.FC = () => {
     }
     if (titulo.length < 5) {
       newMessages.push('Informe a descrição');
+    }
+    if (categorias.find(nome => nome.titulo === titulo)) {
+      newMessages.push('Categoria já existente.');
     }
     if (newMessages.length > 0) {
       addMessage({ type: 'error', message: newMessages });
@@ -58,17 +64,17 @@ const CadastroCategoria: React.FC = () => {
       const retorno = await create(dataPost);
       if (!retorno) {
         addMessage({ type: 'error', message: ['Erro ao cadastrar!'] });
+        setDisableButton(false);
       } else {
         addMessage({ type: 'success', message: ['Cadastro efetuado'] });
-        // setCategoria([...categorias, { titulo, descricao, cor }]);
       }
     } catch (error) {
       addMessage({
         type: 'error',
         message: ['Ocorreu um erro no envio das informações'],
       });
+      setDisableButton(false);
     }
-    setDisableButton(false);
   };
 
   useEffect(() => {
@@ -118,20 +124,24 @@ const CadastroCategoria: React.FC = () => {
             value={formValues.cor || '#000000'}
             onChange={handleChange}
           />
-          <button disabled={buttonDisable} type="submit">
+          <Button disabled={buttonDisable} type="submit">
             Cadastrar
-          </button>
+          </Button>
+          &nbsp;
+          <Button onClick={() => history.goBack()}>Voltar</Button>
         </form>
 
         {categorias.length === 0 && <div>Loading...</div>}
-
-        <ul>
-          {categorias.map(value => (
-            <li key={value.titulo}>{value.titulo}</li>
-          ))}
-        </ul>
-
-        <Link to="/">Voltar à Home</Link>
+        {categorias.length > 0 && (
+          <Categorias>
+            <h3>Categorias Cadastradas:</h3>
+            <ul>
+              {categorias.map(value => (
+                <li key={value.titulo}>{value.titulo}</li>
+              ))}
+            </ul>
+          </Categorias>
+        )}
       </FormWrapper>
     </PageDefault>
   );

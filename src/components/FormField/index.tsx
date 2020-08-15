@@ -24,6 +24,7 @@ const FormField: React.FC<FormFieldProps> = ({
   type,
   name,
   suggestions,
+  children,
   ...props
 }) => {
   const tagId = `id_${name}`;
@@ -43,6 +44,7 @@ const FormField: React.FC<FormFieldProps> = ({
           />
         )}
         <LabelText>{label}</LabelText>
+        {children}
         {suggestions && (
           <datalist id={`options_${tagId}`}>
             {suggestions.map(suggestion => (

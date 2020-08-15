@@ -1,5 +1,5 @@
 import React, { useState, useEffect, FormEvent } from 'react';
-
+import { FiPlusCircle } from 'react-icons/fi';
 import { Link, useHistory } from 'react-router-dom';
 import PageDefault from '../../../components/PageDefault';
 import FormField, { FormWrapper } from '../../../components/FormField';
@@ -9,6 +9,7 @@ import { getCategories } from '../../../repositories/CategoriesRepository';
 import { createVideo } from '../../../repositories/VideosRepository';
 import { VideosInterface, CategoriasInterface } from '../../../types/video';
 import Message from '../../../components/Message';
+import Button from '../../../components/Button';
 
 const CadastroVideo: React.FC = () => {
   const initialValues = {
@@ -81,6 +82,7 @@ const CadastroVideo: React.FC = () => {
             type: 'error',
             message: ['Erro ao cadastrar.'],
           });
+          setDisableButton(false);
         } else {
           addMessage({ type: 'success', message: ['Cadastro efetuado'] });
         }
@@ -89,10 +91,11 @@ const CadastroVideo: React.FC = () => {
           type: 'error',
           message: ['Ocorreu um erro no envio das informações'],
         });
+        setDisableButton(false);
       }
-      setDisableButton(false);
     }
   };
+
   const hasMessage = messageObj.message.length > 0;
 
   const handleClickSuccess = () => {
@@ -138,14 +141,25 @@ const CadastroVideo: React.FC = () => {
             value={formValues.categoria}
             onChange={handleChange}
             suggestions={listaCategorias}
-          />
-          <button disabled={buttonDisable} type="submit">
+          >
+            <Link to="/cadastro/video/categoria">
+              <FiPlusCircle
+                size={24}
+                title="Adicionar categoria"
+                style={{ marginLeft: '5px' }}
+                color="#fff"
+              />
+            </Link>
+          </FormField>
+          <Button disabled={buttonDisable} type="submit">
             Cadastrar
-          </button>
+          </Button>
+          &nbsp;
+          <Button onClick={() => history.goBack()}>Voltar</Button>
         </form>
       </FormWrapper>
 
-      <Link to="/cadastro/video/categoria">Cadastrar categoria</Link>
+      {/* <Link to="/cadastro/video/categoria">Cadastrar categoria</Link> */}
     </PageDefault>
   );
 };

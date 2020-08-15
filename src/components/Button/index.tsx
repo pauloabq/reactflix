@@ -1,7 +1,12 @@
-import React from 'react';
+import React, { ButtonHTMLAttributes } from 'react';
 import { Container } from './styles';
 
-const Button: React.FC = ({ children, ...props }) => {
+type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement>;
+type ExtendedButtonProps = ButtonProps & {
+  responsive?: boolean;
+};
+
+const Button: React.FC<ExtendedButtonProps> = ({ children, ...props }) => {
   return <Container {...props}>{children}</Container>;
 };
 

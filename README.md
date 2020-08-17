@@ -10,7 +10,7 @@
   <img alt="GitHub language count" src="https://img.shields.io/github/languages/count/pauloabq/reactflix">
 
   <a href="https://rocketseat.com.br">
-    <img alt="Made by Rocketseat" src="https://img.shields.io/badge/%20imersao%20React-Alura-%237259c1">
+    <img alt="Imersão React ALura" src="https://img.shields.io/badge/%20imersao%20React-Alura-%237259c1">
   </a>
 
   <img alt="License" src="https://img.shields.io/github/license/pauloabq/reactflix">
@@ -27,9 +27,14 @@ Projeto de desenvolvimento de plataforma agregadora de conteúdo em vídeo (form
 Acesse aqui: https://reactflix.pauloabq.vercel.app/
 
 ## Prints
-![GitHub Logo](/.github/print02.png)
 
-![GitHub Logo](/.github/print01.png)
+
+<p align="center">
+    <img alt="Web" width="600px" src=".github/print02.png" >
+</p>
+<p align="center">
+    <img alt="Web" width="600px" src=".github/print01.png" >
+</p>
 
 ## Tecnologias
 

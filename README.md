@@ -26,34 +26,43 @@ Projeto de desenvolvimento de plataforma agregadora de conteúdo em vídeo (form
 ## Live preview
 Acesse aqui: https://reactflix.pauloabq.vercel.app/
 
-## Em andamento...
-Projeto em andamento.
+## Prints
+![GitHub Logo](/.github/print02.png)
+
+![GitHub Logo](/.github/print01.png)
+
+## Tecnologias
+
+- React
+- NodeJS
+- Typescript
 
 
-### :memo: Licença
+### Licença
 
 Esse projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
 
 ---
+### :man_technologist: Autor
 
-Criado por <strong>Paulo Albuquerque</strong>
+### Paulo Albuquerque
 
-[![Twitter][twitter-shield]][twitter-url] [![LinkedIn][linkedin-shield]][linkedin-url] [![GitHub][github-profile-shield]][github-profile-url]
-
-
+ [![Gmail][gmail-shield]][gmail-url] [![GitHub][github-profile-shield]][github-profile-url] [![LinkedIn][linkedin-shield]][linkedin-url] [![Twitter][twitter-shield]][twitter-url]
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-[license-shield]: https://img.shields.io/github/license/pauloabq/reactflix
-[license-url]: https://github.com/pauloabq/reactflix/LICENSE
 
-[twitter-shield]: https://img.shields.io/badge/-twitter-black.svg?style=flat-square&logo=twitter&colorB=555
+
+[twitter-shield]: https://img.shields.io/badge/-@pauloabq-1DA1F2?style=flat&logo=twitter&logoColor=white
 [twitter-url]: http://twitter.com/pauloabq
 
-[github-profile-shield]: https://img.shields.io/badge/-Github-black?style=flat-square&logo=github&colorB=555
+[gmail-shield]: https://img.shields.io/badge/-pcajunior%40gmail.com-white?style=flat&logo=gmail&logoColor=red&colorA=white&colorB=red
+[gmail-url]: mailto:pcajunior@gmail.com
+
+[github-profile-shield]: https://img.shields.io/badge/-Github-000?style=flat&logo=github&logoColor=white
 [github-profile-url]: http://github.com/pauloabq
 
-[linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=flat-square&logo=linkedin&colorB=0077b5
+[linkedin-shield]: https://img.shields.io/badge/-Linkedin-0077B5?style=flat&logo=linkedin&logoColor=white
 [linkedin-url]: https://linkedin.com/in/pauloabq
 
 
